@@ -4,6 +4,7 @@
 <html>
 <head runat="server">
     <title>Index</title>
+     <link href="~/Content/Index.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -27,16 +28,14 @@
                 <asp:Button ID="FilterButton" runat="server" Text="Filtrar" CssClass="btn btn-primary" OnClick="FilterButton_Click" />
             </asp:Panel>
 
-            <asp:GridView ID="EmpresasGridView" runat="server" CssClass="table" AutoGenerateColumns="False">
+            <asp:GridView ID="GridView" runat="server" CssClass="table" AutoGenerateColumns="False">
                 <Columns>
                     <asp:BoundField DataField="Nome" HeaderText="Nome" />
                     <asp:BoundField DataField="Cnpj" HeaderText="CNPJ" />
-                    <asp:TemplateField HeaderText="Actions">
+                    <asp:TemplateField >
                         <ItemTemplate>
-                            <asp:LinkButton ID="EditLinkButton" runat="server" CommandName="Edit" CommandArgument='<%# Eval("EmpresaId") %>' Text="Edit" />
-                            |
-                            <asp:LinkButton ID="DetailsLinkButton" runat="server" CommandName="Details" CommandArgument='<%# Eval("EmpresaId") %>' Text="Details" />
-                            |
+                            <asp:LinkButton ID="EditLinkButton" runat="server" PostBackUrl='<%# "~/Views/Empresa/Edit.aspx?id=" & Eval("EmpresaId") %>'  Text="Edit" />                           
+                            <asp:LinkButton ID="DetailsLinkButton" runat="server" CommandName="Details" CommandArgument='<%# Eval("EmpresaId") %>' Text="Details" />                      
                             <asp:LinkButton ID="DeleteLinkButton" runat="server" CommandName="Delete" CommandArgument='<%# Eval("EmpresaId") %>' Text="Delete" />
                         </ItemTemplate>
                     </asp:TemplateField>

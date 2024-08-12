@@ -7,15 +7,14 @@ Public Class Create
 
     Private ReadOnly _serviceBaseEmpresa As IServiceBase(Of Empresa)
     Private ReadOnly _serviceBaseAssociado As IServiceBase(Of Associado)
+    Private ReadOnly _serviceAssociado As IAssociadoService
     Public Sub New()
-        Dim serviceBaseEmpresa As IServiceBase(Of Empresa) = CType(DependencyResolver.Current.GetService(GetType(IServiceBase(Of Empresa))), IServiceBase(Of Empresa))
-        Dim serviceBaseAssociado As IServiceBase(Of Associado) = CType(DependencyResolver.Current.GetService(GetType(IServiceBase(Of Associado))), IServiceBase(Of Associado))
-        _serviceBaseEmpresa = serviceBaseEmpresa
-        _serviceBaseAssociado = serviceBaseAssociado
+        _serviceBaseEmpresa = CType(DependencyResolver.Current.GetService(GetType(IServiceBase(Of Empresa))), IServiceBase(Of Empresa))
+        _serviceBaseAssociado = CType(DependencyResolver.Current.GetService(GetType(IServiceBase(Of Associado))), IServiceBase(Of Associado))
+        _serviceAssociado = CType(DependencyResolver.Current.GetService(GetType(IAssociadoService)), IAssociadoService)
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
 
         If Not IsPostBack Then
 
@@ -26,7 +25,6 @@ Public Class Create
             EmpresasListBox.DataValueField = "EmpresaId"
             EmpresasListBox.DataBind()
         End If
-
 
     End Sub
 
@@ -41,6 +39,7 @@ Public Class Create
                     .Nome = item.Text
                 })
             End If
+
         Next
         Return empresasSelecionadas
     End Function
@@ -48,17 +47,27 @@ Public Class Create
     Protected Sub CreateButton_Click1(ByVal sender As Object, ByVal e As EventArgs)
         If Page.IsValid Then
 
-            Dim novoAssociado As New Associado() With {
-                .Nome = NomeTextBox.Text,
-                .Cpf = CpfTextBox.Text,
-                .DataNascimento = DateTime.Parse(DataNascimentoTextBox.Text),
-                .Empresas = ObterEmpresasSelecionadas()
-            }
+
+            If _serviceAssociado.ExisteCpf(CpfTextBox.Text) Then
+
+                CpfErrorLabel.Text = "O CPF informado já está cadastrado."
+                CpfErrorLabel.Visible = True
+
+            Else
+                Dim novoAssociado As New Associado() With {
+               .Nome = NomeTextBox.Text,
+               .Cpf = CpfTextBox.Text,
+               .DataNascimento = DateTime.Parse(DataNascimentoTextBox.Text),
+               .Empresas = ObterEmpresasSelecionadas()
+                }
+
+                _serviceBaseAssociado.Add(novoAssociado)
+
+                Response.Redirect("~/Views/Associados/Index.aspx")
+
+            End If
 
 
-            _serviceBaseAssociado.Add(novoAssociado)
-
-            Response.Redirect("~/Views/Associados/Index.aspx")
         End If
     End Sub
 End Class

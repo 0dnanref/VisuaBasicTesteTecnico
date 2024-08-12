@@ -44,11 +44,11 @@ Public Class Index1
 
 
 
-        EmpresasGridView.DataSource = empresas
-        EmpresasGridView.DataBind()
+        GridView.DataSource = empresas
+        GridView.DataBind()
     End Sub
 
-    Protected Sub GridView1_RowCommand(ByVal sender As Object, ByVal e As GridViewCommandEventArgs) Handles EmpresasGridView.RowCommand
+    Protected Sub GridView1_RowCommand(ByVal sender As Object, ByVal e As GridViewCommandEventArgs) Handles GridView.RowCommand
         Dim id As Integer = Convert.ToInt32(e.CommandArgument)
 
         Select Case e.CommandName

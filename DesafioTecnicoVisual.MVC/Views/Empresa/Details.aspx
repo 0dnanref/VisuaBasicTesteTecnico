@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        
             <h1>Details</h1>         
             <hr />
             <dl class="row">
@@ -35,7 +35,7 @@
                     </asp:Repeater>
                 </dd>
             </dl>
-        </div>
+        
         <div>
             <asp:LinkButton ID="EditLink" runat="server" Text="Edit" PostBackUrl='<%# ResolveUrl("~/Empresa/Edit.aspx?id=" & Bind("EmpresaId")) %>' />
             <asp:HyperLink ID="BackLink" runat="server" NavigateUrl="~/Views/Empresa/Index.aspx" Text="Back to List" />

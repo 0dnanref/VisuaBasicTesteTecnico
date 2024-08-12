@@ -18,7 +18,7 @@ Namespace DesafioTecnicoVisualBasic.Infra.Data.Repositorios
             Dim exists As Boolean = False
 
             Using conn As New SqlConnection(_connectionString)
-                Dim query As String = "SELECT COUNT(1) FROM Empresas WHERE Cnpj = @Cnpj"
+                Dim query As String = "SELECT COUNT(1) FROM Empresa WHERE Cnpj = @Cnpj"
                 Using cmd As New SqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@Cnpj", cnpj)
                     conn.Open()
@@ -31,6 +31,7 @@ Namespace DesafioTecnicoVisualBasic.Infra.Data.Repositorios
 
         Public Function GetByIdIncludeAssociados(id As Integer) As Empresa Implements IEmpresaRepository.GetByIdIncludeAssociados
             Dim empresa As New Empresa()
+            empresa.Associados = New List(Of Associado)
 
             Using conn As New SqlConnection(_connectionString)
                 Dim query As String = "SELECT e.EmpresaId, e.Nome, e.Cnpj, a.AssociadoId, a.Nome AS AssociadoNome, a.Cpf " &

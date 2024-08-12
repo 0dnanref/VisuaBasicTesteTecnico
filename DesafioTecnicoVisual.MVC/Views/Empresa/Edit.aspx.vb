@@ -4,20 +4,16 @@ Imports DesafioTecnicoVisualBasic.Domain.DesafioTecnicoVisualBasic.Domain.Interf
 
 
 Public Class Edit1
-    Inherits System.Web.UI.Page
-
+    Inherits Page
 
     Private ReadOnly _serviceBase As IServiceBase(Of Empresa)
     Private ReadOnly _serviceEmpresa As IEmpresaService
-    Private ReadOnly _serviceAssociadoBase As IAssociadoService
+    Private ReadOnly _serviceBaseAssociado As IServiceBase(Of Associado)
 
     Public Sub New()
-        Dim serviceBase As IServiceBase(Of Associado) = CType(DependencyResolver.Current.GetService(GetType(IServiceBase(Of Associado))), IServiceBase(Of Associado))
-        Dim serviceEmpresa As IEmpresaService = CType(DependencyResolver.Current.GetService(GetType(IEmpresaService)), IEmpresaService)
-        Dim serviceAssociadoBase As IAssociadoService = CType(DependencyResolver.Current.GetService(GetType(IAssociadoService)), IAssociadoService)
-        _serviceBase = serviceBase
-        _serviceAssociadoBase = serviceAssociadoBase
-        _serviceEmpresa = serviceEmpresa
+        _serviceBase = CType(DependencyResolver.Current.GetService(GetType(IServiceBase(Of Empresa))), IServiceBase(Of Empresa))
+        _serviceEmpresa = CType(DependencyResolver.Current.GetService(GetType(IEmpresaService)), IEmpresaService)
+        _serviceBaseAssociado = CType(DependencyResolver.Current.GetService(GetType(IServiceBase(Of Associado))), IServiceBase(Of Associado))
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
@@ -26,8 +22,7 @@ Public Class Edit1
             Dim empresaId As Integer = Convert.ToInt32(Request.QueryString("id"))
             Dim empresa As Empresa = ObterEmpresa(empresaId)
 
-
-            Dim associados As List(Of Associado) = _serviceAssociadoBase.GetAll()
+            Dim associados As List(Of Associado) = _serviceBaseAssociado.GetAll()
             AssociadosListBox.DataSource = associados
             AssociadosListBox.DataTextField = "Nome"
             AssociadosListBox.DataValueField = "AssociadoId"
@@ -37,25 +32,37 @@ Public Class Edit1
                 BindData(empresa)
             End If
 
-
-
         End If
     End Sub
 
     Protected Sub SaveButton_Click(ByVal sender As Object, ByVal e As EventArgs) Handles SaveButton.Click
         If Page.IsValid Then
-            Dim empresa As New Empresa() With {
-                    .EmpresaId = Convert.ToInt32(EmpresaIdTextBox.Text),
-                    .Nome = NomeTextBox.Text,
-                    .Cnpj = CnpjTextBox.Text,
-                    .Associados = ObterAssociadosSelecionadas()
-                }
 
 
-            AtualizarEmpresa(empresa)
+            Dim idEmpresaCnpj = _serviceEmpresa.GetIdByCnpj(CnpjTextBox.Text)
+            Dim result = _serviceEmpresa.ExisteCnpj(CnpjTextBox.Text)
 
-            ' Redirecionar ou mostrar uma mensagem de sucesso
-            Response.Redirect("~/Views/Associado/Index.aspx")
+            If result AndAlso idEmpresaCnpj <> Convert.ToInt32(CnpjTextBox.Text) Then
+                CnpjErrorLabel.Text = "Este CNPJ já está cadastrado para outra empresa."
+                CnpjErrorLabel.Visible = True
+                Return
+
+            Else
+
+                Dim empresa As New Empresa() With {
+                   .EmpresaId = Convert.ToInt32(EmpresaIdTextBox.Text),
+                   .Nome = NomeTextBox.Text,
+                   .Cnpj = CnpjTextBox.Text,
+                   .Associados = ObterAssociadosSelecionadas()
+               }
+
+                AtualizarEmpresa(empresa)
+
+                ' Redirecionar ou mostrar uma mensagem de sucesso
+                Response.Redirect("~/Views/Empresa/Index.aspx")
+
+            End If
+
         End If
     End Sub
 
@@ -67,7 +74,6 @@ Public Class Edit1
         EmpresaIdTextBox.Text = empresa.EmpresaId.ToString()
         NomeTextBox.Text = empresa.Nome
         CnpjTextBox.Text = empresa.Cnpj
-
 
         ' Marcar os associados selecionadas
         For Each associado As Associado In empresa.Associados

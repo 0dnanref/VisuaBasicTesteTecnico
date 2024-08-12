@@ -4,12 +4,11 @@
 <html>
 <head runat="server">
     <title>Edit</title>
-    <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro.css" rel="stylesheet" />
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div>
-            <h1>Edit</h1>            
+    <form id="form1" runat="server">    
+            <h1>Edição</h1>            
             <hr />
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="text-danger" />
             
@@ -32,7 +31,8 @@
                             <asp:Label ID="CnpjLabel" runat="server" AssociatedControl="CnpjTextBox" Text="Cnpj" CssClass="control-label" />
                             <asp:TextBox ID="CnpjTextBox" runat="server" CssClass="form-control" Text='<%# Bind("Cnpj") %>' />
                             <asp:RequiredFieldValidator ID="CnpjRequiredFieldValidator" runat="server" ControlToValidate="CnpjTextBox" ErrorMessage="CPF é obrigatório." CssClass="text-danger" />
-                            <asp:RegularExpressionValidator ID="CnpjRegularExpressionValidator" runat="server" ControlToValidate="CnpjTextBox" ValidationExpression="\d{3}\.\d{3}\.\d{3}-\d{2}" ErrorMessage="O CPF deve estar no formato XXX.XXX.XXX-XX" CssClass="text-danger" />
+                            <asp:RegularExpressionValidator ID="CnpjRegularExpressionValidator" runat="server" ControlToValidate="CnpjTextBox" ValidationExpression="\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}" ErrorMessage="O CNPJ deve estar no formato XX.XXX.XXX/0001-XX"  CssClass="text-danger" />
+                            <asp:Label ID="CnpjErrorLabel" runat="server" CssClass="text-danger" Visible="False"></asp:Label>
                         </div>                   
 
                         <div class="form-group">
@@ -50,10 +50,18 @@
             </div>
 
             <div>
-                <asp:HyperLink ID="BackToListLink" runat="server" NavigateUrl="~/Views/Associado/Index.aspx" Text="Back to List" />
+                <asp:HyperLink ID="BackToListLink" runat="server" NavigateUrl="~/Views/Empresa/Index.aspx" Text="Back to List" />
             </div>
-        </div>
     </form>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#CnpjTextBox').inputmask('99.999.999/9999-99');
+        });
+    </script>
+
 </body>
 </html>
 

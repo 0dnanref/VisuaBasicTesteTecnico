@@ -5,11 +5,12 @@
 <head runat="server">
     <title>Edit</title>
     <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <h1>Edit</h1>            
+       
+            <h1>Edição</h1>            
             <hr />
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="text-danger" />
             
@@ -33,6 +34,7 @@
                             <asp:TextBox ID="CpfTextBox" runat="server" CssClass="form-control" Text='<%# Bind("Cpf") %>' />
                             <asp:RequiredFieldValidator ID="CpfRequiredFieldValidator" runat="server" ControlToValidate="CpfTextBox" ErrorMessage="CPF é obrigatório." CssClass="text-danger" />
                             <asp:RegularExpressionValidator ID="CpfRegularExpressionValidator" runat="server" ControlToValidate="CpfTextBox" ValidationExpression="\d{3}\.\d{3}\.\d{3}-\d{2}" ErrorMessage="O CPF deve estar no formato XXX.XXX.XXX-XX" CssClass="text-danger" />
+                            <asp:Label ID="CpfErrorLabel" runat="server" CssClass="text-danger" Visible="False"></asp:Label>
                         </div>
 
                         <div class="form-group">
@@ -59,7 +61,14 @@
             <div>
                 <asp:HyperLink ID="BackToListLink" runat="server" NavigateUrl="~/Views/Associado/Index.aspx" Text="Back to List" />
             </div>
-        </div>
+        
     </form>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#CpfTextBox').inputmask('999.999.999-99');
+        });
+    </script>
 </body>
 </html>

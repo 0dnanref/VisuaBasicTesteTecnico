@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Index</title>
+     <link href="~/Content/Index.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -29,7 +30,7 @@
                 <asp:Button ID="FilterButton" runat="server" Text="Filtrar" CssClass="btn btn-primary" OnClick="FilterButton_Click" />
             </asp:Panel>
 
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+            <asp:GridView ID="GridView" runat="server" AutoGenerateColumns="False">
                 <Columns>
                     <asp:BoundField DataField="Nome" HeaderText="Nome" />
                     <asp:BoundField DataField="Cpf" HeaderText="CPF" />

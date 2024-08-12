@@ -7,9 +7,11 @@ Public Class Create1
 
     Private ReadOnly _serviceBaseEmpresa As IServiceBase(Of Empresa)
     Private ReadOnly _serviceBaseAssociado As IServiceBase(Of Associado)
+    Private ReadOnly _serviceEmpresa As IEmpresaService
     Public Sub New()
         Dim serviceBaseEmpresa As IServiceBase(Of Empresa) = CType(DependencyResolver.Current.GetService(GetType(IServiceBase(Of Empresa))), IServiceBase(Of Empresa))
         Dim serviceBaseAssociado As IServiceBase(Of Associado) = CType(DependencyResolver.Current.GetService(GetType(IServiceBase(Of Associado))), IServiceBase(Of Associado))
+        _serviceEmpresa = CType(DependencyResolver.Current.GetService(GetType(IEmpresaService)), IEmpresaService)
         _serviceBaseEmpresa = serviceBaseEmpresa
         _serviceBaseAssociado = serviceBaseAssociado
     End Sub
@@ -48,15 +50,24 @@ Public Class Create1
     Protected Sub CreateButton_Click1(ByVal sender As Object, ByVal e As EventArgs)
         If Page.IsValid Then
 
-            Dim novoAssociado As New Empresa() With {
+            If _serviceEmpresa.ExisteCnpj(CnpjTextBox.Text) Then
+
+                CnpjErrorLabel.Text = "O CNPJ informado já está cadastrado."
+                CnpjErrorLabel.Visible = True
+
+            Else
+                Dim novoAssociado As New Empresa() With {
                 .Nome = NomeTextBox.Text,
                 .Cnpj = CnpjTextBox.Text,
                 .Associados = ObterAssociadosSelecionadas()
             }
 
-            _serviceBaseEmpresa.Add(novoAssociado)
+                _serviceBaseEmpresa.Add(novoAssociado)
 
-            Response.Redirect("~/Views/Empresas/Index.aspx")
+                Response.Redirect("~/Views/Empresas/Index.aspx")
+
+            End If
+
         End If
     End Sub
 

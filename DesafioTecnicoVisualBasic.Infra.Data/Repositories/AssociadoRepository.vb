@@ -21,11 +21,10 @@ Namespace DesafioTecnicoVisualBasic.Infra.Data.Repositorios
             Dim exists As Boolean = False
 
             Using conn As New SqlConnection(_connectionString)
-                Dim query As String = "SELECT COUNT(1) FROM Associados WHERE Cpf = @Cpf"
+                Dim query As String = "SELECT COUNT(1) FROM Associado WHERE Cpf = @Cpf"
                 Using cmd As New SqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@Cpf", cpf)
                     conn.Open()
-
                     exists = Convert.ToBoolean(cmd.ExecuteScalar())
                 End Using
             End Using

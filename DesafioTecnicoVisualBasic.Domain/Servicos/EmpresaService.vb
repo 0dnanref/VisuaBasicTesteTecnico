@@ -10,6 +10,9 @@ Namespace DesafioTecnicoVisualBasic.Domain.Servicos
 
         Private ReadOnly _empresaRepository As IEmpresaRepository
 
+        Public Sub New()
+        End Sub
+
         Public Sub New(empresaRepository As IEmpresaRepository)
             MyBase.New(empresaRepository)
             _empresaRepository = empresaRepository

@@ -131,6 +131,15 @@ Partial Public Class Edit
     Protected WithEvents CpfRegularExpressionValidator As Global.System.Web.UI.WebControls.RegularExpressionValidator
 
     '''<summary>
+    '''Controle CpfErrorLabel.
+    '''</summary>
+    '''<remarks>
+    '''Campo gerado automaticamente.
+    '''Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+    '''</remarks>
+    Protected WithEvents CpfErrorLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Controle DataNascimentoLabel.
     '''</summary>
     '''<remarks>

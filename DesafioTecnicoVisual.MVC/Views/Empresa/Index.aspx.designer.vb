@@ -86,11 +86,11 @@ Partial Public Class Index1
     Protected WithEvents FilterButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Controle EmpresasGridView.
+    '''Controle GridView.
     '''</summary>
     '''<remarks>
     '''Campo gerado automaticamente.
     '''Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
     '''</remarks>
-    Protected WithEvents EmpresasGridView As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents GridView As Global.System.Web.UI.WebControls.GridView
 End Class

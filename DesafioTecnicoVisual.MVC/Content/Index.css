@@ -1,0 +1,113 @@
+﻿/* Estilo universal para telas de listagem (index) */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Painel de Filtro */
+#FilterPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha à esquerda */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+    #FilterPanel .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        width: 300px; /* Define a largura dos campos de texto */
+    }
+
+    #FilterPanel label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    #FilterPanel .form-control {
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        width: 100%; /* O campo de texto ocupará toda a largura da form-group */
+    }
+
+    #FilterPanel .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 3px;
+        transition: background-color 0.3s ease;
+        align-self: flex-start; /* Alinha o botão à esquerda */
+        margin-top: 10px; /* Espaço entre o último campo e o botão */
+    }
+
+        #FilterPanel .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+/* GridView */
+#GridView {
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    #GridView th, #GridView td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #GridView th {
+        background-color: #f8f8f8;
+        font-weight: bold;
+        color: #333;
+    }
+
+    #GridView td {
+        color: #555;
+    }
+
+    #GridView .aspNetDisabled {
+        color: #ccc;
+    }
+
+    /* Botões de Ação */
+    #GridView .LinkButton {
+        color: #007bff;
+        text-decoration: none;
+        margin-right: 10px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+        #GridView .LinkButton:hover {
+            color: #0056b3;
+        }

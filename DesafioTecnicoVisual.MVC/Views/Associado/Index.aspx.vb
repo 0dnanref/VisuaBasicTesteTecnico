@@ -53,11 +53,11 @@ Public Class Index
             associados = associados.Where(Function(a) a.DataNascimento = filtro.DataNascimento.Value)
         End If
 
-        GridView1.DataSource = associados
-        GridView1.DataBind()
+        GridView.DataSource = associados
+        GridView.DataBind()
     End Sub
 
-    Protected Sub GridView1_RowCommand(ByVal sender As Object, ByVal e As GridViewCommandEventArgs) Handles GridView1.RowCommand
+    Protected Sub GridView1_RowCommand(ByVal sender As Object, ByVal e As GridViewCommandEventArgs) Handles GridView.RowCommand
         Dim id As Integer = Convert.ToInt32(e.CommandArgument)
 
         Select Case e.CommandName

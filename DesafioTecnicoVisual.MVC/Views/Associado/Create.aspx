@@ -4,11 +4,11 @@
 <html>
 <head runat="server">
     <title>Create</title>
-    <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+      
             <h1>Create</h1>          
             <hr />
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="text-danger" />
@@ -23,6 +23,7 @@
                         <asp:Label ID="CpfLabel" runat="server" AssociatedControl="CpfTextBox" Text="CPF"></asp:Label>
                         <asp:TextBox ID="CpfTextBox" runat="server" CssClass="form-control" Text='<%# Bind("Cpf") %>' />
                         <asp:RequiredFieldValidator ID="CpfRequiredFieldValidator" runat="server" ControlToValidate="CpfTextBox" ErrorMessage="CPF é obrigatório." CssClass="text-danger" />
+                        <asp:Label ID="CpfErrorLabel" runat="server" CssClass="text-danger" Visible="False"></asp:Label>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="DataNascimentoLabel" runat="server" AssociatedControl="DataNascimentoTextBox" Text="Data de Nascimento"></asp:Label>
@@ -44,7 +45,13 @@
             <div>
                 <asp:HyperLink ID="BackToListLink" runat="server" NavigateUrl="~/Views/Associado/Index.aspx" Text="Back to List"></asp:HyperLink>
             </div>
-        </div>
     </form>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#CpfTextBox').inputmask('999.999.999-99');
+        });
+    </script>
 </body>
 </html>
