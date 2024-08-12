@@ -1,0 +1,48 @@
+-- Criação do banco de dados
+CREATE DATABASE DesafioTecnicoVisualBasicDb;
+GO
+
+-- Uso do banco de dados criado
+USE DesafioTecnicoVisualBasicDb;
+GO
+
+-- Criação da tabela Associado
+CREATE TABLE Associado (
+    AssociadoId INT IDENTITY(1,1) PRIMARY KEY,
+    Nome NVARCHAR(200) NOT NULL,
+    Cpf NVARCHAR(11) NOT NULL UNIQUE,
+    DataNascimento DATE NOT NULL
+);
+GO
+
+-- Criação da tabela Empresa
+CREATE TABLE Empresa (
+    EmpresaId INT IDENTITY(1,1) PRIMARY KEY,
+    Nome NVARCHAR(200) NOT NULL,
+    Cnpj NVARCHAR(14) NOT NULL UNIQUE
+);
+GO
+
+-- Tabela de junção para o relacionamento N para N
+CREATE TABLE AssociadoEmpresa (
+    AssociadoId INT NOT NULL,
+    EmpresaId INT NOT NULL,
+    FOREIGN KEY (AssociadoId) REFERENCES Associado(AssociadoId),
+    FOREIGN KEY (EmpresaId) REFERENCES Empresa(EmpresaId),
+    PRIMARY KEY (AssociadoId, EmpresaId)
+);
+GO
+
+-- Inserção de registros na tabela Associado
+INSERT INTO Associado (Nome, Cpf, DataNascimento) VALUES
+('João Silva', '12345678900', '1985-06-15'),
+('Maria Oliveira', '98765432100', '1990-09-25'),
+('Carlos Santos', '55555555555', '1978-12-10');
+GO
+
+-- Inserção de registros na tabela Empresa
+INSERT INTO Empresa (Nome, Cnpj) VALUES
+('Empresa A', '12345678000195'),
+('Empresa B', '98765432000189'),
+('Empresa C', '55555555000123');
+GO
